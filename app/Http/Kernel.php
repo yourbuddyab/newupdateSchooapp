@@ -65,5 +65,6 @@ class Kernel extends HttpKernel
         'installed' => \App\Http\Middleware\RedirectToInstallerIfNotInstalled::class,
         'instal' => \App\Http\Middleware\RedirectIfInstalled::class,
         'teacher' => \App\Http\Middleware\IsLign::class,
+        'admin' => \App\Http\Middleware\Isadmin::class,
     ];
 }

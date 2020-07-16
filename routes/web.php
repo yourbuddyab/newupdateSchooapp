@@ -34,7 +34,7 @@ Route::group(['middleware' => ['web', 'installed', 'teacher']], function () {
     
     Auth::routes();
 
-    Route::group(['middleware' => ['web', 'auth',]], function () {
+    Route::group(['middleware' => ['web', 'auth', 'admin']], function () {
         Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/register', 'Auth\RegisterController@showRegistrationForm')->name('register');
         Route::post('/register', 'Auth\RegisterController@register');
@@ -118,4 +118,27 @@ Route::group(['middleware' => ['web', 'installed', 'teacher']], function () {
         //Video Classes
         Route::resource('/video', 'VideoClassController');
     });
+    Route::group(['middleware' => ['web', 'auth']], function () {
+        Route::get('/home', 'HomeController@index')->name('home');
+         //attendance
+         Route::resource('/attendance', 'AttendanceController');
+         Route::post('/attendance/check', 'AttendanceController@check');
+ 
+        //student
+        Route::resource('/student', 'StudentController');
+        Route::post('/student/check', 'StudentController@check');
+
+        //Leave
+        Route::resource('/leave', 'LeaveController');
+        Route::post('/leave/filter', 'LeaveController@filter');
+
+        //Diary
+        Route::resource('/diary', 'DiaryController');
+        Route::post('/diary/check', 'DiaryController@check');
+        
+        //Video Classes
+        Route::resource('/video', 'VideoClassController');
+    });
+
 });
+

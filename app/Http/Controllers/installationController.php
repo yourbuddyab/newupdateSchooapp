@@ -129,6 +129,7 @@ class InstallationController extends Controller
         User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'status' => 0,
             'password' => Hash::make($data['password']),
         ]);
     }

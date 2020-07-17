@@ -96,8 +96,8 @@
                                                             <div class="col-md-6">
                                                                 <select name="rolls" class="form-control rolls">
                                                                 <option>Select Roll for {{$item->name}}</option>
-                                                                    <option value="0" {{$item->roll == 0 ? 'selected' : ''}}>Non Class Teacher</option>
-                                                                    <option value="1" {{$item->roll == 1 ? 'selected' : ''}}>Class Teacher</option>
+                                                                    <option value="0" >Non Class Teacher</option>
+                                                                    <option value="1" >Class Teacher</option>
                                                                 </select>
                                                             </div>
                                                             <div class="col-md-6">
@@ -117,12 +117,14 @@
                                                                             @endif
                                                                             @endforeach
                                                                         @endforeach
+                                                                        @if(!empty($uniqueclass))
                                                                         @foreach ($uniqueclass as $testclass)
                                                                             @if (!empty($testclass))
                                                                                 <option value="{{$testclass}}">{{$testclass}}</option>
                                                                                 
                                                                             @endif
                                                                         @endforeach
+                                                                        @endif
                                                                 </select>
                                                             </div>
                                                         </div>

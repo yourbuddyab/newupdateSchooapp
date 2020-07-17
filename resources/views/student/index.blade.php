@@ -56,52 +56,75 @@
     z-index: 5000;
     transform: translate(-50%, -50%);
 ">
-        <img src="http://appadmin.nalandapublicschoolbikaner.com/image/800.gif">
+        <img src="{{asset('image/driver/800.gif')}}">
     </div>
         </div>
     </div>
 </div>
 @endsection
 @section('js')
-    <script>
-        @if (auth()->user()->status == 0)
-        $('#class').change(function(e){
-            const class_id = $(this).val();
-            const _token = $('input[name="_token"]').val();
-        @else
-        $(document).ready(function() {
-            const class_id = $('#teacherlog').val();
-            const _token = $('input[name="_token"]').val();
-        setTimeout(function() {
-        jQuery.support.cors = true;
-        @endif
+@if (auth()->user()->status == 0)
+<script>
+    $('#class').change(function (e) {
+        const class_id = $(this).val();
+        const _token = $('input[name="_token"]').val();
         $.ajax({
+            type: "post",
+            url: "/student/check",
+            data: { 'class_id': class_id, '_token': _token },
+            beforeSend: function () {
+                $("#loading").removeClass('d-none');
+            },
+            complete: function () {
+                $("#loading").addClass('d-none');
+            },
+            success: function (response) {
+                $("table").each(function () {
+                    $(this).find('td').remove();
+
+                });
+                for (let index = 0; index < response.length; index++) {
+                    const element = response[index];
+
+                    var input = "<tr><td>" + element.roll_no + "</td>" + "<td>" + element.name + "</td>" + "<td>" + element.username + "</td>" + "<td>" + element.phone + "</td>" + "<td>" + "<a class='text-center' href='/student/" + element.id + "/edit'><i class='fas fa-edit text-dark'></i></a></td><td></tr>";
+                    $('tbody').append(input);
+                }
+            }
+        });
+    });
+
+</script>
+@else
+<script>
+    $(document).ready(function () {
+        const class_id = $('#teacherlog').val();
+        const _token = $('input[name="_token"]').val();
+        setTimeout(function () {
+            $.ajax({
                 type: "post",
                 url: "/student/check",
-                data: {'class_id':class_id,'_token':_token},
-                beforeSend: function(){
-                   $("#loading").removeClass('d-none');
+                data: { 'class_id': class_id, '_token': _token },
+                beforeSend: function () {
+                    $("#loading").removeClass('d-none');
                 },
-                complete: function(){
-                   $("#loading").addClass('d-none');
+                complete: function () {
+                    $("#loading").addClass('d-none');
                 },
                 success: function (response) {
-                    $("table").each(function(){
-                            $(this).find('td').remove();
+                    $("table").each(function () {
+                        $(this).find('td').remove();
 
                     });
                     for (let index = 0; index < response.length; index++) {
                         const element = response[index];
 
-                        var input = "<tr><td>"+element.roll_no+"</td>"+"<td>"+element.name+"</td>"+"<td>"+element.username+"</td>"+"<td>"+element.phone+"</td>"+"<td>"+"<a class='text-center' href='/student/"+element.id+"/edit'><i class='fas fa-edit text-dark'></i></a></td><td></tr>";
+                        var input = "<tr><td>" + element.roll_no + "</td>" + "<td>" + element.name + "</td>" + "<td>" + element.username + "</td>" + "<td>" + element.phone + "</td>" + "<td>" + "<a class='text-center' href='/student/" + element.id + "/edit'><i class='fas fa-edit text-dark'></i></a></td><td></tr>";
                         $('tbody').append(input);
                     }
                 }
             });
-            @if (auth()->user()->status == 1)
-    },1000);
-        @endif
-        });
-
-    </script>
+        },500);
+    });
+</script>
+@endif
 @endsection

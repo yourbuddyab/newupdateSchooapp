@@ -70,7 +70,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="wrappers">
-                                    <div class="file-upload" id="#preiv" style="background-image:url('{{$teacher->images}}');">
+                                    <div class="file-upload" id="#preiv" style="background-image:url('{{$teacher->images ?? asset('images/avatar1.png')}}');">
                                         <input type="file" name="images" id="profile">
                                     </div>
                                 </div>

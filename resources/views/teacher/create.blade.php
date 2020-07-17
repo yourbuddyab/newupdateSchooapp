@@ -91,7 +91,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="wrappers">
-                                    <div class="file-upload" id="#preiv" style="background-image:url('/images/avatar2.png');">
+                                    <div class="file-upload" id="#preiv" style="background-image:url('/images/avatar1.png');">
                                         <input type="file" required required name="images" id="profile" value="{{old('images')}}">
                                     </div>
                                 </div>

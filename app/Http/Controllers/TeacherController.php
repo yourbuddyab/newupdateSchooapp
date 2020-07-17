@@ -42,12 +42,13 @@ class TeacherController extends Controller
     {
         $added=Teacher::create($this->validateRequest());
         $this->storedImage($added);
-        $userLog = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make("teacher123"),
-            'status' => 1,
+        $data = $request->validate([
+            'name' => 'required|string|min:3',
+            'email' => 'required|email|unique:users',
         ]);
+        $data['password'] = Hash::make("teacher123");
+        $data['status'] = 1;
+        $userLog = User::create($data);
         return redirect('/teacher')->with('status', 'New Create Added');
     }
 
